@@ -1,0 +1,99 @@
+plugins {
+    id "com.android.application"
+    id "kotlin-android"
+    id "dev.flutter.flutter-gradle-plugin"
+    id "com.google.gms.google-services"
+    id "com.google.firebase.crashlytics"
+}
+
+def localProperties = new Properties()
+def localPropertiesFile = rootProject.file('local.properties')
+if (localPropertiesFile.exists()) {
+    localPropertiesFile.withReader('UTF-8') { reader ->
+        localProperties.load(reader)
+    }
+}
+
+def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
+if (flutterVersionCode == null) {
+    flutterVersionCode = '1'
+}
+
+def flutterVersionName = localProperties.getProperty('flutter.versionName')
+if (flutterVersionName == null) {
+    flutterVersionName = '1.0'
+}
+
+// For release APK or Bundle
+def keystoreProperties = new Properties()
+def keystorePropertiesFile = rootProject.file('animeforall.properties')
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+}
+
+android {
+    namespace 'com.yourcompany.newbirdy'
+    compileSdkVersion localProperties.getProperty('flutter.compileSdkVersion').toInteger()
+    ndkVersion '22.0.7026061'
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
+
+    lintOptions {
+        disable 'InvalidPackage'
+    }
+
+    defaultConfig {
+        multiDexEnabled true
+        applicationId "com.yourcompany.newbirdy"
+        minSdkVersion localProperties.getProperty('flutter.minSdkVersion').toInteger()
+        targetSdkVersion 34 // تعديل مستوى الـAPI المطلوب
+        versionCode flutterVersionCode.toInteger()
+        versionName flutterVersionName
+    }
+
+    // For release APK or Bundle
+    signingConfigs {
+        release {
+            storeFile file("sari.jks")
+            storePassword "741852963"
+            keyAlias "sari-storetype"
+            keyPassword "741852963"
+        }
+    }
+
+    buildTypes {
+        release {
+            // Signing with the debug keys for now, so `flutter run --release` works.
+
+            // For release APK or Bundle
+            signingConfig signingConfigs.release
+            // signingConfig signingConfigs.debug
+
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            // Enable the generation of the native debug symbols
+            ndk {
+                debugSymbolLevel 'FULL' // إضافة رموز التصحيح
+            }
+        }
+    }
+}
+
+flutter {
+    source '../..'
+}
+
+dependencies {
+    implementation platform('com.google.firebase:firebase-bom:28.4.1')
+    implementation 'com.google.firebase:firebase-analytics'
+    implementation 'com.google.firebase:firebase-auth'
+    implementation 'com.google.firebase:firebase-firestore'
+    implementation 'com.google.firebase:firebase-storage'
+    implementation('com.google.android.exoplayer:exoplayer:2.19.1')
+}
+
+// Apply the Google services Gradle plugin
+apply plugin: 'com.google.gms.google-services'

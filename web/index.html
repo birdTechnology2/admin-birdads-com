@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Bird Admin</title>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#000000">
+  <meta name="description" content="A new Flutter project.">
+  <base href="/"> <!-- Ensure base href ends with a slash -->
+
+  <!-- Firebase JS SDK v9 -->
+  <script type="module">
+    // Import Firebase JS SDKs
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-analytics.js";
+    import { getFirestore } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
+    import { getMessaging, onMessage } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-messaging.js";
+
+    // Your web app's Firebase configuration from firebase_options.dart
+    const firebaseConfig = {
+      apiKey: "AIzaSyACWEwXvznddfmxSfgPiwUGU1X8XUPCEmk",
+      authDomain: "birdy-d8157.firebaseapp.com",
+      projectId: "birdy-d8157",
+      storageBucket: "birdy-d8157.appspot.com",
+      messagingSenderId: "843123500831",
+      appId: "1:843123500831:web:70d372c601d7059cdf322a",
+      measurementId: "G-82GCLGJS0N"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    const firestore = getFirestore(app);
+    const messaging = getMessaging(app);
+
+    // Firebase Messaging Setup
+    onMessage(messaging, (payload) => {
+      console.log('Message received. ', payload);
+      const notificationTitle = payload.notification.title;
+      const notificationOptions = {
+        body: payload.notification.body,
+        icon: payload.notification.icon,
+      };
+
+      // Display notification
+      if (Notification.permission === "granted") {
+        new Notification(notificationTitle, notificationOptions);
+      }
+    });
+
+    // Request Notification permission
+    if (Notification.permission !== "granted") {
+      Notification.requestPermission().then((permission) => {
+        if (permission === "granted") {
+          console.log("Notification permission granted");
+        } else {
+          console.log("Notification permission denied");
+        }
+      });
+    }
+  </script>
+</head>
+<body>
+<script>
+  // Register the service worker for Firebase Messaging
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/web/firebase-messaging-sw.js')
+      .then((registration) => {
+        console.log('Service Worker registered with scope:', registration.scope);
+      }).catch((error) => {
+        console.error('Service Worker registration failed:', error);
+      });
+  }
+</script>
+<script src="main.dart.js" type="application/javascript"></script>
+</body>
+</html>

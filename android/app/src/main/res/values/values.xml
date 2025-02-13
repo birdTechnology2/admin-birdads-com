@@ -1,0 +1,9 @@
+<resources>
+    <string name="default_web_client_id" translatable="false">unset</string>
+    <string name="firebase_database_url" translatable="false">unset</string>
+    <string name="gcm_defaultSenderId" translatable="false">843123500831</string>
+    <string name="google_api_key" translatable="false">AIzaSyBFctekJxRXm7n8dmfwI2jcaBBCANXK0HU</string>
+    <string name="google_app_id" translatable="false">1:843123500831:android:7e4ebd27ea3301e9df322a</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyBFctekJxRXm7n8dmfwI2jcaBBCANXK0HU</string>
+    <string name="project_id" translatable="false">birdy-d8157</string>
+</resources>

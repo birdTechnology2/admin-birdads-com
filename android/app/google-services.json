@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "843123500831",
+    "project_id": "birdy-d8157",
+    "storage_bucket": "birdy-d8157.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:843123500831:android:7e4ebd27ea3301e9df322a",
+        "android_client_info": {
+          "package_name": "com.yourcompany.birdy"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBFctekJxRXm7n8dmfwI2jcaBBCANXK0HU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:843123500831:android:e6b0b57fa5088ec1df322a",
+        "android_client_info": {
+          "package_name": "com.yourcompany.newbirdy"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBFctekJxRXm7n8dmfwI2jcaBBCANXK0HU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

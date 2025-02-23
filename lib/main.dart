@@ -1,30 +1,34 @@
-// lib/main.dart
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'router.dart';
 import 'main_menu.dart';
-import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-
-Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  // هذا السطر للتأكد من أن Firebase تم تهيئتها بشكل صحيح في الخلفية
-  await Firebase.initializeApp(options: firebaseOptions);
-  print("Handling a background message: ${message.messageId}");
-  // هنا يمكنك تشغيل إشعارات أو تنفيذ أي منطق خاص في الخلفية
-}
+import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:flutter_web_plugins/flutter_web_plugins.dart'; // استيراد المكتبة هنا
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  setUrlStrategy(PathUrlStrategy()); // Set URL strategy to remove # from URLs
+
+  // تهيئة Firebase
   await Firebase.initializeApp(
     options: firebaseOptions,
   );
+
+  // ضبط استراتيجية الروابط في الويب فقط
+  if (kIsWeb) {
+    setUrlStrategy(PathUrlStrategy()); // إزالة # من روابط الويب
+  }
 
   // تعيين معالج الرسائل في الخلفية
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
   runApp(App());
+}
+
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  await Firebase.initializeApp(options: firebaseOptions);
+  print("Handling a background message: ${message.messageId}");
 }
 
 class App extends StatelessWidget {
